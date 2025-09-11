@@ -10,7 +10,6 @@ option(TASKRUNNER_SANITIZE "Enable sanitizers" OFF)
 
 add_executable(taskrunner
     src/main.cpp
-    src/Task.cpp
     src/Runner.cpp
 )
 

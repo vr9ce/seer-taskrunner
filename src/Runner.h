@@ -20,13 +20,13 @@ struct TaskResult {
 
 class Runner {
 public:
-    explicit Runner(Config cfg);
+    explicit Runner(TaskDefinition taskDef);
 
     int run();
 
 private:
-    Config cfg_;
-    std::vector<TaskSpec> flattened_;
+    TaskDefinition taskDef_;
+    std::vector<Block> flattened_;
 
     std::unordered_map<std::string, size_t> id_to_index_;
     std::vector<TaskStatus> statuses_;
@@ -37,24 +37,13 @@ private:
     std::queue<size_t> ready_;
     size_t running_{0};
 
-    struct Inherit {
-        std::unordered_map<std::string, std::string> env;
-        std::string cwd;
-        int retries{0};
-        long long timeoutMs{0};
-        bool ignoreFailure{false};
-        std::vector<std::string> depends;
-    };
-
-    static void mergeEnv(std::unordered_map<std::string, std::string> &base, const std::unordered_map<std::string, std::string> &over);
     static bool looksAbsoluteId(const std::string &s);
-    void flatten_node(const TaskNode &node, const std::string &prefix, const Inherit &inherit);
-    void flatten_all();
 
+    void flatten_blocks(const Block& block, const std::string& prefix);
     void build_index();
     void schedule_initial();
     void schedule_if_ready(size_t idx);
-    TaskResult run_task(const TaskSpec &task);
+    TaskResult run_task(const Block &task);
 };
 
 } 

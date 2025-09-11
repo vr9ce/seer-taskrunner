@@ -1,0 +1,217 @@
+{
+  "label": "叉取栈板",
+  "builtin": false,
+  "inputParams": [],
+  "outputParams": [],
+  "taskVariables": [],
+  "rootBlock": {
+    "id": 0,
+    "name": "RootBp",
+    "blockType": "RootBp",
+    "refTaskDefId": "",
+    "remark": null,
+    "disabled": null,
+    "inputParams": {},
+    "children": {
+      "default": [
+        {
+          "id": 5,
+          "name": "b5",
+          "blockType": "WhileBp",
+          "children": {
+            "true": [
+              {
+                "id": 1,
+                "name": "b1",
+                "blockType": "RobotSingleNavigationBp",
+                "refTaskDefId": "",
+                "remark": null,
+                "disabled": null,
+                "inputParams": {
+                  "station": {
+                    "type": "Simple",
+                    "value": "LM3",
+                    "ref": null
+                  }
+                },
+                "children": {},
+                "color": null,
+                "selected": false,
+                "moving": false
+              },
+              {
+                "id": 2,
+                "name": "b2",
+                "blockType": "RobotSingleUserDefinedBp",
+                "refTaskDefId": "",
+                "remark": null,
+                "disabled": null,
+                "inputParams": {
+                  "userDefinedAction": {
+                    "type": "Simple",
+                    "value": "{\n    \"id\": \"AP4\",\n    \"operation\": \"Script\",\n    \"script_args\": {\n        \"operation\": \"forkLoad\",\n        \"startHeight\": 0.087,\n        \"endHeight\": 0.087,\n        \"recognize\": true,\n        \"recfile\": \"栈板.srec\"\n    },\n    \"script_name\": \"tasks/fork.py\",\n    \"script_stage\": 3\n}",
+                    "ref": null
+                  }
+                },
+                "children": {},
+                "color": null,
+                "selected": false,
+                "moving": false
+              },
+              {
+                "id": 3,
+                "name": "b3",
+                "blockType": "RobotSingleNavigationBp",
+                "refTaskDefId": "",
+                "remark": null,
+                "disabled": null,
+                "inputParams": {
+                  "station": {
+                    "type": "Simple",
+                    "value": "LM3",
+                    "ref": null
+                  }
+                },
+                "children": {},
+                "color": null,
+                "selected": false,
+                "moving": false
+              },
+              {
+                "id": 4,
+                "name": "b4",
+                "blockType": "RobotSingleUserDefinedBp",
+                "refTaskDefId": "",
+                "remark": null,
+                "disabled": null,
+                "inputParams": {
+                  "userDefinedAction": {
+                    "type": "Simple",
+                    "value": "{\n    \"id\": \"AP4\",\n    \"operation\": \"Script\",\n    \"script_args\": {\n        \"operation\": \"forkUnload\",\n        \"startHeight\": 0.3,\n        \"endHeight\": 0.087,\n        \"recognize\": false\n    },\n    \"script_name\": \"tasks/fork.py\",\n    \"script_stage\": 3\n}",
+                    "ref": null
+                  }
+                },
+                "children": {},
+                "color": null,
+                "selected": false,
+                "moving": false
+              }
+            ]
+          },
+          "inputParams": {
+            "condition": {
+              "type": "Simple",
+              "value": true
+            }
+          },
+          "refTaskDefId": "",
+          "selected": false
+        },
+        {
+          "id": 6,
+          "name": "b6",
+          "blockType": "RepeatNumBp",
+          "children": {
+            "default": [
+              {
+                "id": 7,
+                "name": "b7",
+                "blockType": "RobotSingleNavigationBp",
+                "refTaskDefId": "",
+                "remark": null,
+                "disabled": null,
+                "inputParams": {
+                  "station": {
+                    "type": "Simple",
+                    "value": "LM3",
+                    "ref": null
+                  }
+                },
+                "children": {},
+                "color": null,
+                "selected": false,
+                "moving": false
+              },
+              {
+                "id": 8,
+                "name": "b8",
+                "blockType": "RobotSingleUserDefinedBp",
+                "refTaskDefId": "",
+                "remark": null,
+                "disabled": null,
+                "inputParams": {
+                  "userDefinedAction": {
+                    "type": "Simple",
+                    "value": "{\n    \"id\": \"AP4\",\n    \"operation\": \"Script\",\n    \"script_args\": {\n        \"operation\": \"forkLoad\",\n        \"startHeight\": 0.087,\n        \"endHeight\": 0.087,\n        \"recognize\": true,\n        \"recfile\": \"栈板.srec\"\n    },\n    \"script_name\": \"tasks/fork.py\",\n    \"script_stage\": 3\n}",
+                    "ref": null
+                  }
+                },
+                "children": {},
+                "color": null,
+                "selected": false,
+                "moving": false
+              },
+              {
+                "id": 9,
+                "name": "b9",
+                "blockType": "RobotSingleNavigationBp",
+                "refTaskDefId": "",
+                "remark": null,
+                "disabled": null,
+                "inputParams": {
+                  "station": {
+                    "type": "Simple",
+                    "value": "LM3",
+                    "ref": null
+                  }
+                },
+                "children": {},
+                "color": null,
+                "selected": false,
+                "moving": false
+              },
+              {
+                "id": 10,
+                "name": "b10",
+                "blockType": "RobotSingleUserDefinedBp",
+                "refTaskDefId": "",
+                "remark": null,
+                "disabled": null,
+                "inputParams": {
+                  "userDefinedAction": {
+                    "type": "Simple",
+                    "value": "{\n    \"id\": \"AP4\",\n    \"operation\": \"Script\",\n    \"script_args\": {\n        \"operation\": \"forkUnload\",\n        \"startHeight\": 0.3,\n        \"endHeight\": 0.087,\n        \"recognize\": false\n    },\n    \"script_name\": \"tasks/fork.py\",\n    \"script_stage\": 3\n}",
+                    "ref": null
+                  }
+                },
+                "children": {},
+                "color": null,
+                "selected": false,
+                "moving": false
+              }
+            ]
+          },
+          "inputParams": {
+            "num": {
+              "type": "Simple",
+              "value": "10"
+            }
+          },
+          "refTaskDefId": "",
+          "selected": false
+        }
+      ]
+    },
+    "color": "",
+    "selected": false
+  },
+  "modifiedOn": 1677766970543,
+  "modifiedBy": "Anonymouse",
+  "createdOn": 1677766364464,
+  "createdBy": "Anonymouse",
+  "group": "",
+  "blockChildrenCollapsed": {
+    "11true": true
+  },
+  "globalVariables": []
+}

@@ -6,47 +6,65 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <variant>
 
 namespace tr {
 
-struct TaskNode {
-    std::string id;
-    std::vector<std::string> dependsOn;
-    std::string cmd;
-    std::vector<std::string> args;
-    std::unordered_map<std::string, std::string> env;
-    std::string cwd;
-    int retries{0};
-    long long timeoutMs{0};
-    bool ignoreFailure{false};
-    std::vector<TaskNode> tasks;
+struct ParamValue {
+    std::string type;
+    std::string value;
+    std::string ref;
     
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(TaskNode, id, dependsOn, cmd, args, env, cwd, retries, timeoutMs, ignoreFailure, tasks)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(ParamValue, type, value, ref)
 };
 
-struct TaskSpec {
-    std::string id;
-    std::vector<std::string> dependsOn;
-    std::string cmd;
-    std::vector<std::string> args;
-    std::unordered_map<std::string, std::string> env;
-    std::string cwd;
-    int retries{0};
-    long long timeoutMs{0};
-    bool ignoreFailure{false};
+struct Block {
+    int id;
+    std::string name;
+    std::string blockType;
+    std::string refTaskDefId;
+    std::string remark;
+    bool disabled{false};
+    std::unordered_map<std::string, ParamValue> inputParams;
+    std::unordered_map<std::string, std::vector<Block>> children;
+    std::string color;
+    bool selected{false};
+    bool moving{false};
     
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(TaskSpec, id, dependsOn, cmd, args, env, cwd, retries, timeoutMs, ignoreFailure)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Block, id, name, blockType, refTaskDefId, remark, disabled, inputParams, children, color, selected, moving)
 };
 
-struct Config {
-    std::vector<TaskNode> tasks;
-    std::vector<std::string> entry;
-    int parallel{4};
-    bool stopOnFailure{true};
+struct RootBlock {
+    int id;
+    std::string name;
+    std::string blockType;
+    std::string refTaskDefId;
+    std::string remark;
+    bool disabled{false};
+    std::unordered_map<std::string, ParamValue> inputParams;
+    std::unordered_map<std::string, std::vector<Block>> children;
+    std::string color;
+    bool selected{false};
     
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Config, tasks, entry, parallel, stopOnFailure)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(RootBlock, id, name, blockType, refTaskDefId, remark, disabled, inputParams, children, color, selected)
 };
 
-Config parse_config(const nlohmann::json &root);
+struct TaskDefinition {
+    std::string label;
+    bool builtin{false};
+    std::vector<std::string> inputParams;
+    std::vector<std::string> outputParams;
+    std::vector<std::string> taskVariables;
+    RootBlock rootBlock;
+    long long modifiedOn{0};
+    std::string modifiedBy;
+    long long createdOn{0};
+    std::string createdBy;
+    std::string group;
+    std::unordered_map<std::string, bool> blockChildrenCollapsed;
+    std::vector<std::string> globalVariables;
+    
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(TaskDefinition, label, builtin, inputParams, outputParams, taskVariables, rootBlock, modifiedOn, modifiedBy, createdOn, createdBy, group, blockChildrenCollapsed, globalVariables)
+};
 
-} 
+} // namespace tr
