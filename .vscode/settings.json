@@ -10,11 +10,13 @@
     "C_Cpp.autoAddFileAssociations": false,
     "C_Cpp.caseSensitiveFileSupport": "enabled",
     "C_Cpp.files.exclude": {
-        "/usr/include/c++/15": true,
-        "/usr/include/c++/14": true,
-        "/usr/include/c++/12": true,
+        "/usr/include/c++/10": true,
         "/usr/include/c++/11": true,
-        "/usr/include/c++/10": true
+        "/usr/include/c++/12": true,
+        "/usr/include/c++/14": true,
+        "/usr/include/c++/15": true
     },
-    "cmake.useCMakePresets": "never"
+    "files.exclude": {
+        "deps/lewissbaker/generator/include/generator": true
+    }
 }

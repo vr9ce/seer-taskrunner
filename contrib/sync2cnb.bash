@@ -1,6 +1,7 @@
 #! /bin/bash
 
 cd `dirname "$0"`/..
+git push
 
 rm -rf   /tmp/shynur/seer/taskrunner.git
 mkdir -p /tmp/shynur/seer

@@ -1,5 +1,6 @@
 #pragma once
 #include <bits/stdc++.h>
+#include <generator>
 #include "nlohmann/json.hpp"
 using namespace std::literals;
 
@@ -22,6 +23,8 @@ class [[gnu::weak]] Interpreter {
     Interpreter(const ::nlohmann::json &node): tree(node) {
 
     }
+
+
 };
 
 }  // namespace gogo

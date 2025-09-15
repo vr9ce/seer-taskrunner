@@ -29,4 +29,6 @@
  (makefile-mode . ((whitespace-style . (face tabs))
                    (mode . whitespace)))
  (yaml-mode . ((indent-tabs-mode . nil)
-               (tab-width . 2))))
+               (tab-width . 2)))
+ ("deps" . ((nil . ((eval . (when buffer-file-name
+                              (setq-local buffer-read-only t))))))))

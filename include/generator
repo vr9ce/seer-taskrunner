@@ -1,0 +1,3 @@
+// C++ includes used for precompiling -*- C++ -*-
+
+#include "../deps/lewissbaker/generator/include/__generator.hpp"
