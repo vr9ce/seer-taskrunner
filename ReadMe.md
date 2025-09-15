@@ -13,6 +13,12 @@ $ ls bin
 taskrunner
 ```
 
+## 清理
+
+```bash
+make clean
+```
+
 # 测试
 
 ```bash
