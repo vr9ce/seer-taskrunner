@@ -1,4 +1,7 @@
+# 构建
+## 环境
 
-ubuntu 18.04
-gcc 13, clang 18
+- Ubuntu 18.04
+- Clang++ 18
+- G++ 13
 

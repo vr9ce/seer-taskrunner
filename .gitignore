@@ -1,1 +1,9 @@
-build
+?*~
+\#?*#
+.#?*#
+
+/build/
+!/build/.empty
+
+/CMakeUserPresets.json
+.dir-locals-2.el
