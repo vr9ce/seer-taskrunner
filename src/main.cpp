@@ -8,17 +8,13 @@
 
 using namespace tr;
 
-int main(int argc, char **argv) {
-    const char *path = argc > 1 ? argv[1] : "task.json";
-    std::ifstream in(path);
-    if (!in) {
-        std::cerr << "Failed to open " << path << "\n";
-        return 2;
-    }
-    std::string content((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>());
+int main(int, const char *const argv[]) {
+    auto in = std::ifstream{argv[1]};
+    const auto content = std::string{std::istreambuf_iterator<char>{in}, std::istreambuf_iterator<char>{}};
+
     try {
-        nlohmann::json root = nlohmann::json::parse(content);
-        
+        auto root = nlohmann::json::parse(content);
+
         // Handle null values by converting them to default values
         std::function<void(nlohmann::json&)> handleNulls = [&](nlohmann::json& j) {
             if (j.is_object()) {
@@ -53,7 +49,7 @@ int main(int argc, char **argv) {
                 }
             }
         };
-        
+
         handleNulls(root);
         TaskDefinition taskDef = root.get<TaskDefinition>();
         Runner runner(std::move(taskDef));

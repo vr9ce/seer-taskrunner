@@ -1,0 +1,472 @@
+{
+  "remark": "",
+  "templates": [
+    {
+      "id": "68AD490AEA16125D41E0E3B4",
+      "version": 6,
+      "label": "叉车老化测试",
+      "builtin": false,
+      "inputParams": [
+        {
+          "name": "targetA",
+          "type": "String",
+          "label": "目标站点A",
+          "remark": "",
+          "required": true,
+          "defaultValue": "LM1",
+          "objectTypes": []
+        },
+        {
+          "name": "targetB",
+          "type": "String",
+          "label": "目标站点B",
+          "remark": "",
+          "required": true,
+          "defaultValue": "LM2",
+          "objectTypes": []
+        },
+        {
+          "name": "targetC",
+          "type": "String",
+          "label": "目标站点C",
+          "remark": "",
+          "required": true,
+          "defaultValue": "LM3",
+          "objectTypes": []
+        },
+        {
+          "name": "PP",
+          "type": "String",
+          "label": "停靠点",
+          "remark": "",
+          "required": true,
+          "defaultValue": "PP4",
+          "objectTypes": []
+        },
+        {
+          "name": "lowLevel",
+          "type": "Double",
+          "label": "低电量",
+          "remark": "",
+          "required": true,
+          "defaultValue": "0.2",
+          "objectTypes": null
+        },
+        {
+          "name": "chargeLevel",
+          "type": "Double",
+          "label": "充电电量",
+          "remark": "",
+          "required": true,
+          "defaultValue": "0.3",
+          "objectTypes": null
+        },
+        {
+          "name": "CP",
+          "type": "String",
+          "label": "充电点",
+          "remark": "",
+          "required": true,
+          "defaultValue": "AP5",
+          "objectTypes": null
+        },
+        {
+          "name": "TaskLevel",
+          "type": "Double",
+          "label": "可执行任务电量",
+          "remark": "",
+          "required": true,
+          "defaultValue": "0.9",
+          "objectTypes": null
+        }
+      ],
+      "outputParams": [],
+      "taskVariables": [
+        {
+          "name": "batteryLevel",
+          "type": "Double",
+          "defaultValue": "",
+          "objectTypes": null,
+          "remark": ""
+        }
+      ],
+      "rootBlock": {
+        "id": 0,
+        "name": "RootBp",
+        "blockType": "RootBp",
+        "refTaskDefId": "",
+        "remark": null,
+        "disabled": null,
+        "inputParams": {},
+        "children": {
+          "default": [
+            {
+              "id": 20,
+              "name": "b20",
+              "blockType": "WhileBp",
+              "refTaskDefId": "",
+              "remark": null,
+              "disabled": null,
+              "inputParams": {
+                "condition": {
+                  "type": "Simple",
+                  "value": true,
+                  "ref": null
+                }
+              },
+              "children": {
+                "true": [
+                  {
+                    "id": 23,
+                    "name": "b23",
+                    "blockType": "RobotSingleGetOneStatusBp",
+                    "refTaskDefId": "",
+                    "remark": null,
+                    "disabled": null,
+                    "inputParams": {
+                      "status": {
+                        "type": "Simple",
+                        "value": "charging",
+                        "ref": null
+                      }
+                    },
+                    "children": {},
+                    "color": null
+                  },
+                  {
+                    "id": 15,
+                    "name": "b15",
+                    "blockType": "RobotSingleGetOneStatusBp",
+                    "refTaskDefId": "",
+                    "remark": "",
+                    "disabled": null,
+                    "inputParams": {
+                      "status": {
+                        "type": "Simple",
+                        "value": "batteryLevel",
+                        "ref": null
+                      }
+                    },
+                    "children": {},
+                    "color": null
+                  },
+                  {
+                    "id": 14,
+                    "name": "b14",
+                    "blockType": "SetTaskVariableBp",
+                    "refTaskDefId": "",
+                    "remark": null,
+                    "disabled": null,
+                    "inputParams": {
+                      "varName": {
+                        "type": "Ref",
+                        "value": "taskVariables.batteryLevel",
+                        "ref": {
+                          "source": "taskVariables",
+                          "name": "batteryLevel"
+                        }
+                      },
+                      "varValue": {
+                        "type": "Ref",
+                        "value": "b15.status",
+                        "ref": {
+                          "source": "b15",
+                          "name": "status"
+                        }
+                      }
+                    },
+                    "children": {},
+                    "color": null
+                  },
+                  {
+                    "id": 24,
+                    "name": "b24",
+                    "blockType": "IfElseBp",
+                    "refTaskDefId": "",
+                    "remark": null,
+                    "disabled": null,
+                    "inputParams": {
+                      "condition": {
+                        "type": "Ref",
+                        "value": "b23.status",
+                        "ref": {
+                          "source": "b23",
+                          "name": "status"
+                        }
+                      }
+                    },
+                    "children": {
+                      "true": [
+                        {
+                          "id": 25,
+                          "name": "b25",
+                          "blockType": "PrintBp",
+                          "refTaskDefId": "",
+                          "remark": null,
+                          "disabled": null,
+                          "inputParams": {
+                            "message": {
+                              "type": "Simple",
+                              "value": "Robot is charging",
+                              "ref": null
+                            }
+                          },
+                          "children": {},
+                          "color": null
+                        },
+                        {
+                          "id": 27,
+                          "name": "b27",
+                          "blockType": "IfBp",
+                          "refTaskDefId": "",
+                          "remark": null,
+                          "disabled": null,
+                          "inputParams": {
+                            "condition": {
+                              "type": "Expression",
+                              "value": "blocks.b15.status > taskInputs[\"TaskLevel\"]",
+                              "ref": {
+                                "source": "b15",
+                                "name": "status"
+                              }
+                            }
+                          },
+                          "children": {
+                            "true": [
+                              {
+                                "id": 28,
+                                "name": "b28",
+                                "blockType": "RobotSingleNavigationBp",
+                                "refTaskDefId": "",
+                                "remark": null,
+                                "disabled": null,
+                                "inputParams": {
+                                  "station": {
+                                    "type": "Ref",
+                                    "value": "taskInputs.PP",
+                                    "ref": {
+                                      "source": "taskInputs",
+                                      "name": "PP"
+                                    }
+                                  }
+                                },
+                                "children": {},
+                                "color": null
+                              }
+                            ]
+                          },
+                          "color": null
+                        }
+                      ],
+                      "false": [
+                        {
+                          "id": 18,
+                          "name": "b18",
+                          "blockType": "IfBp",
+                          "refTaskDefId": "",
+                          "remark": null,
+                          "disabled": null,
+                          "inputParams": {
+                            "condition": {
+                              "type": "Expression",
+                              "value": "taskVariables[\"batteryLevel\"] < taskInputs[\"lowLevel\"]",
+                              "ref": null
+                            }
+                          },
+                          "children": {
+                            "true": [
+                              {
+                                "id": 26,
+                                "name": "b26",
+                                "blockType": "AbortTaskBp",
+                                "refTaskDefId": "",
+                                "remark": null,
+                                "disabled": null,
+                                "inputParams": {
+                                  "msg": {
+                                    "type": "Simple",
+                                    "value": "Robot battery low, task terminated",
+                                    "ref": null
+                                  }
+                                },
+                                "children": {},
+                                "color": null
+                              }
+                            ]
+                          },
+                          "color": null
+                        },
+                        {
+                          "id": 16,
+                          "name": "b16",
+                          "blockType": "IfElseBp",
+                          "refTaskDefId": "",
+                          "remark": null,
+                          "disabled": null,
+                          "inputParams": {
+                            "condition": {
+                              "type": "Expression",
+                              "value": "taskVariables[\"batteryLevel\"] <taskInputs[\"chargeLevel\"]",
+                              "ref": null
+                            }
+                          },
+                          "children": {
+                            "true": [
+                              {
+                                "id": 1,
+                                "name": "b1",
+                                "blockType": "RobotSingleNavigationBp",
+                                "refTaskDefId": "",
+                                "remark": null,
+                                "disabled": null,
+                                "inputParams": {
+                                  "station": {
+                                    "type": "Ref",
+                                    "value": "taskInputs.targetA",
+                                    "ref": {
+                                      "source": "taskInputs",
+                                      "name": "targetA"
+                                    }
+                                  }
+                                },
+                                "children": {},
+                                "color": null
+                              },
+                              {
+                                "id": 2,
+                                "name": "b2",
+                                "blockType": "RobotSingleUserDefinedBp",
+                                "refTaskDefId": "",
+                                "remark": null,
+                                "disabled": null,
+                                "inputParams": {
+                                  "userDefinedAction": {
+                                    "type": "Simple",
+                                    "value": "{\n    \"id\": \"AP4\",\n    \"operation\": \"Script\",\n    \"script_args\": {\n        \"operation\": \"forkLoad\",\n        \"startHeight\": 0.087,\n        \"endHeight\": 0.087,\n        \"recognize\": true,\n        \"recfile\": \"栈板.srec\"\n    },\n    \"script_name\": \"tasks/fork.py\",\n    \"script_stage\": 3\n}",
+                                    "ref": null
+                                  }
+                                },
+                                "children": {},
+                                "color": null
+                              },
+                              {
+                                "id": 3,
+                                "name": "b3",
+                                "blockType": "RobotSingleNavigationBp",
+                                "refTaskDefId": "",
+                                "remark": null,
+                                "disabled": null,
+                                "inputParams": {
+                                  "station": {
+                                    "type": "Ref",
+                                    "value": "taskInputs.targetB",
+                                    "ref": {
+                                      "source": "taskInputs",
+                                      "name": "targetB"
+                                    }
+                                  }
+                                },
+                                "children": {},
+                                "color": null
+                              },
+                              {
+                                "id": 4,
+                                "name": "b4",
+                                "blockType": "RobotSingleUserDefinedBp",
+                                "refTaskDefId": "",
+                                "remark": null,
+                                "disabled": null,
+                                "inputParams": {
+                                  "userDefinedAction": {
+                                    "type": "Simple",
+                                    "value": "{\n    \"id\": \"AP4\",\n    \"operation\": \"Script\",\n    \"script_args\": {\n        \"operation\": \"forkUnload\",\n        \"startHeight\": 0.3,\n        \"endHeight\": 0.087,\n        \"recognize\": false\n    },\n    \"script_name\": \"tasks/fork.py\",\n    \"script_stage\": 3\n}",
+                                    "ref": null
+                                  }
+                                },
+                                "children": {},
+                                "color": null
+                              },
+                              {
+                                "id": 22,
+                                "name": "b22",
+                                "blockType": "RobotSingleNavigationBp",
+                                "refTaskDefId": "",
+                                "remark": null,
+                                "disabled": null,
+                                "inputParams": {
+                                  "station": {
+                                    "type": "Ref",
+                                    "value": "taskInputs.targetC",
+                                    "ref": {
+                                      "source": "taskInputs",
+                                      "name": "targetC"
+                                    }
+                                  }
+                                },
+                                "children": {},
+                                "color": null
+                              },
+                              {
+                                "id": 21,
+                                "name": "b21",
+                                "blockType": "RobotSingleUserDefinedBp",
+                                "refTaskDefId": "",
+                                "remark": null,
+                                "disabled": null,
+                                "inputParams": {
+                                  "userDefinedAction": {
+                                    "type": "Simple",
+                                    "value": "{\n  \"id\":\"DK\",\n  \"binTask\":\"load\"\n}",
+                                    "ref": null
+                                  }
+                                },
+                                "children": {},
+                                "color": null
+                              }
+                            ],
+                            "false": [
+                              {
+                                "id": 17,
+                                "name": "b17",
+                                "blockType": "RobotSingleNavigationBp",
+                                "refTaskDefId": "",
+                                "remark": null,
+                                "disabled": null,
+                                "inputParams": {
+                                  "station": {
+                                    "type": "Ref",
+                                    "value": "taskInputs.CP",
+                                    "ref": {
+                                      "source": "taskInputs",
+                                      "name": "CP"
+                                    }
+                                  }
+                                },
+                                "children": {},
+                                "color": null
+                              }
+                            ]
+                          },
+                          "color": null
+                        }
+                      ]
+                    },
+                    "color": null
+                  }
+                ]
+              },
+              "color": null
+            }
+          ]
+        },
+        "color": ""
+      },
+      "modifiedOn": "2025-09-12T11:46:35.351+00:00",
+      "modifiedBy": "Anonymouse",
+      "createdOn": "2025-08-26T05:41:30.160+00:00",
+      "createdBy": "Anonymouse",
+      "group": ""
+    }
+  ],
+  "components": []
+}
