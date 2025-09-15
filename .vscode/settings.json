@@ -18,5 +18,8 @@
     },
     "files.exclude": {
         "deps/lewissbaker/generator/include/generator": true
+    },
+    "[json]": {
+        "prettier.tabWidth": 4
     }
 }

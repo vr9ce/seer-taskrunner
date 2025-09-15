@@ -12,10 +12,13 @@ using namespace tr;
 
 int main(int, const char *const argv[]) {
     auto in = std::ifstream{argv[1]};
-    const auto content = std::string{std::istreambuf_iterator<char>{in}, std::istreambuf_iterator<char>{}};
-    auto root = nlohmann::json::parse(content);
+    const auto content = std::string{
+        std::istreambuf_iterator<char>{in},
+        std::istreambuf_iterator<char>{}
+    };
+    auto root = ::nlohmann::json::parse(content);
 
-    const auto vm = taskgo::Interpreter{nlohmann::json::parse(root)};
+    const auto vm = taskgo::Interpreter{root};
 
     try {
         // Handle null values by converting them to default values
